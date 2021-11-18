@@ -1,0 +1,22 @@
+Package: reportutils
+Type: Package
+Title: Utility functions for writing reports
+Version: 0.1.0
+Author: Miguel Julio Rodo
+Maintainer: Miguel Julio Rodo <rdxmig002@myuct.ac.za>
+Description: Provides utility functions for
+    commonly-performed tasks when communicating
+    data pre-processing and analysis in a presentation
+    (slides, report etc.).
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    dplyr,
+    datautils (>= 0.1.0)
+Remotes: 
+    MiguelRodo/datautils
+RoxygenNote: 7.1.1

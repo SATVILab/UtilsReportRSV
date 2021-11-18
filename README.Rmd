@@ -1,0 +1,88 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# reportutils
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of reportutils is to provide utility
+functions that facilitate easier, faster and more
+reliable communication of data pre-processing and analysis.
+
+## Installation
+
+You can install the development version of reportutils like so:
+
+``` r
+devtools::install_github("MiguelRodo/reportutils")
+```
+
+## Uses
+
+```{r example}
+library(reportutils)
+```
+
+### Display outputs by section with headings
+
+```{r , include = FALSE}
+set.seed(2106)
+if (!require("ggplot2")) install.packages("ggplot2")
+library(ggplot2)
+plot_list <- vapply(1:4, function(i) {
+  p <- ggplot(
+    data = data.frame(x = rnorm(20, mean = i))
+  ) +
+    geom_histogram(aes(x = x), bins = 20) +
+    expand_limits(x = c(-3, 7))
+  dir_save <- here::here("man/fig")
+  if (!dir.exists(dir_save)) {
+    dir.create(dir_save, recursive = TRUE)
+  }
+  fn <- file.path(dir_save, paste0("p_", i, ".png"))
+  if (file.exists(fn)) return("")
+  ggsave(
+    filename = fn, plot = p, units = "cm",
+    height = 7.5, width = 7.5
+  )
+  ""},
+  ""
+)
+```
+
+The function `loop_and display` outputs the following text:
+```{r , results = "asis"}
+example_tbl <- data.frame(
+  x = rep(c("Female", "Male"), each = 2),
+  y = rep(c("Child", "Adult"), 2),
+  path_plot = paste0(here::here(), "/man/fig/p_", 1:4, ".png"),
+  stringsAsFactors = FALSE
+)
+loop_and_display(
+  .tbl = example_tbl,
+  .vars = c("x", "y"), 
+  .f = function(df) {
+    #print(df)
+    cat(paste0("![](", df$path_plot, ")"), "\n")
+    #knitr::include_graphics(df$path_plot)
+  }
+)
+```
+
+The above command produces the following result, when using the `knitr` chunk option `results = "asis"`:
+```{r , results = "asis"}
+
+```
