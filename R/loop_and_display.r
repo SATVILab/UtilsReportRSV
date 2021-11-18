@@ -137,7 +137,7 @@ loop_and_display <- function(.tbl,
               if (is.null(names(orig_to_display[[cn]]))) {
                 stop("labelling vectors in orig_to_display must be named")
               }
-              orig_to_display[[cn]][[hd]]
+              orig_to_display[[cn]][[as.character(hd)]]
             },
             stop("orig_to_display elements must be character vectors or functions") # nolint
           )
