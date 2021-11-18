@@ -62,30 +62,31 @@
 #'
 #' @examples
 #'
-#'  test_tbl <- tibble::tibble(
-#'    x = rep(letters[1:2], each = 3),
-#'    y = purrr::map(1:2, function(i) {
-#'      letters[(3:5) - as.numeric(i)]
-#'    }) %>%
-#'      unlist()
-#'  )
-#'  loop_and_display(
+#' test_tbl <- tibble::tibble(
+#'   x = rep(letters[1:2], each = 3),
+#'   y = purrr::map(1:2, function(i) {
+#'     letters[(3:5) - as.numeric(i)]
+#'   }) %>%
+#'     unlist()
+#' )
+#' loop_and_display(
 #'   test_tbl,
-#'    .vars = c("x", "y")
-#'  )
-#'  loop_and_display(
-#'    test_tbl,
-#'    .vars = c("x", "y"),
-#'    orig_to_display = list(
-#'      "x" = c("a" = "Letter A",
-#'              "b" = "Letter B")
-#'    )
-#'  )
-#'
+#'   .vars = c("x", "y")
+#' )
+#' loop_and_display(
+#'   test_tbl,
+#'   .vars = c("x", "y"),
+#'   orig_to_display = list(
+#'     "x" = c(
+#'       "a" = "Letter A",
+#'       "b" = "Letter B"
+#'     )
+#'   )
+#' )
 #' @return \code{invisible(TRUE)}, if successful.
-#' 
+#'
 #' @export
-#' 
+#'
 #' @importFrom magrittr %>%
 loop_and_display <- function(.tbl,
                              .vars,
@@ -125,13 +126,11 @@ loop_and_display <- function(.tbl,
       next
     }
     for (j in seq_len(ncol(vars_row))) {
-
       cn <- colnames(vars_row)[j]
       hd <- vars_row[[j]]
       if (hd %in% vars_list_hd[[cn]]) {
         if (cn %in% names(orig_to_display)) {
-          hd <- switch(
-            typeof(orig_to_display[[cn]]),
+          hd <- switch(typeof(orig_to_display[[cn]]),
             "closure" = orig_to_display[[cn]](hd),
             "character" = {
               if (is.null(names(orig_to_display[[cn]]))) {
