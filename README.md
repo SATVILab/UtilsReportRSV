@@ -26,7 +26,8 @@ library(reportutils)
 
 ### Display outputs by section with headings
 
-The function `loop_and display` outputs the following text:
+The function `loop_and display` produces the following result, when
+using the `knitr` chunk option `results = "asis"`:
 
 ``` r
 example_tbl <- data.frame(
@@ -65,6 +66,3 @@ loop_and_display(
 ### Child
 
 ![](c:/Users/migue/Work/Packages/reportutils/man/fig/p_3.png)
-
-The above command produces the following result, when using the `knitr`
-chunk option `results = "asis"`:

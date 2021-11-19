@@ -63,7 +63,7 @@ plot_list <- vapply(1:4, function(i) {
 )
 ```
 
-The function `loop_and display` outputs the following text:
+The function `loop_and display`  produces the following result, when using the `knitr` chunk option `results = "asis"`:
 ```{r , results = "asis"}
 example_tbl <- data.frame(
   x = rep(c("Female", "Male"), each = 2),
@@ -80,9 +80,4 @@ loop_and_display(
     #knitr::include_graphics(df$path_plot)
   }
 )
-```
-
-The above command produces the following result, when using the `knitr` chunk option `results = "asis"`:
-```{r , results = "asis"}
-
 ```
