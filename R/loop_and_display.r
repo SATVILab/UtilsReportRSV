@@ -98,11 +98,13 @@ loop_and_display <- function(.tbl,
   vars_list <- lapply(.vars, function(x) {
     out <- unique(.tbl[[x]])
     if (sort) out <- sort(out)
+    if (is.factor(out)) out <- as.character(out)
     out
   }) %>%
     setNames(.vars)
   vars_tbl <- datautils::cross_df_safe(vars_list) %>%
-    dplyr::arrange(dplyr::across(.vars))
+    dplyr::arrange(dplyr::across(.vars)) %>%
+    dplyr::mutate_if(is.factor, as.character)
 
   # comparison list for headers
   # stores elements that have not been plotted
@@ -112,17 +114,33 @@ loop_and_display <- function(.tbl,
   # above resets when last element
   # of last var is considered
   n_var <- length(vars_list)
-  last_elem_of_last_var <- vars_tbl[[ncol(vars_tbl)]][[nrow(vars_tbl)]]
+  # last_elem_list <- purrr::map(vars_list, function(x) x[length(x)])
   for (i in seq_len(nrow(vars_tbl))) {
     vars_row <- vars_tbl[i, ]
-    reset <- identical(vars_row[[n_var]], last_elem_of_last_var)
+    j <- 1
+    reset_ind <- j
+    if (i > 1) {
+      mismatch_vec_ind <- purrr::map_lgl(seq_along(vars_row), function(j) {
+        vars_row[[j]] != vars_tbl[i - 1, ][[j]]
+      }) %>%
+      which()
+      mismatch_vec_ind <- switch(
+        as.character(length(mismatch_vec_ind)),
+        "0" = , # nolint
+        "1" = integer(0),
+        mismatch_vec_ind[-1]
+      )
+    } else mismatch_vec_ind <- integer(0)
+
     ind_vec <- rep(TRUE, nrow(.tbl))
     for (j in seq_len(ncol(vars_row))) {
       cn <- colnames(vars_row)[j]
       ind_vec <- ind_vec & .tbl[[cn]] %in% vars_row[[cn]]
     }
     if (skip_if_nothing && sum(ind_vec) == 0) {
-      if (reset) vars_list_hd <- vars_list
+      for (j in seq_along(mismatch_vec_ind)) {
+        vars_list_hd[[mismatch_vec_ind[j]]] <- vars_list[[mismatch_vec_ind[j]]]
+      }
       next
     }
     for (j in seq_len(ncol(vars_row))) {
@@ -149,7 +167,9 @@ loop_and_display <- function(.tbl,
       vars_list_hd[[cn]] <- setdiff(vars_list_hd[[cn]], vars_row[[cn]])
     }
     .f(.tbl[ind_vec, ])
-    if (reset) vars_list_hd <- vars_list
+    for (j in seq_along(mismatch_vec_ind)) {
+      vars_list_hd[[mismatch_vec_ind[j]]] <- vars_list[[mismatch_vec_ind[j]]]
+    }
   }
   invisible(TRUE)
 }
