@@ -87,24 +87,25 @@ changes to.
 }
 \examples{
 
- test_tbl <- tibble::tibble(
-   x = rep(letters[1:2], each = 3),
-   y = purrr::map(1:2, function(i) {
-     letters[(3:5) - as.numeric(i)]
-   }) \%>\%
-     unlist()
- )
- loop_and_display(
+test_tbl <- tibble::tibble(
+  x = rep(letters[1:2], each = 3),
+  y = purrr::map(1:2, function(i) {
+    letters[(3:5) - as.numeric(i)]
+  }) \%>\%
+    unlist()
+)
+loop_and_display(
   test_tbl,
-   .vars = c("x", "y")
- )
- loop_and_display(
-   test_tbl,
-   .vars = c("x", "y"),
-   orig_to_display = list(
-     "x" = c("a" = "Letter A",
-             "b" = "Letter B")
-   )
- )
-
+  .vars = c("x", "y")
+)
+loop_and_display(
+  test_tbl,
+  .vars = c("x", "y"),
+  orig_to_display = list(
+    "x" = c(
+      "a" = "Letter A",
+      "b" = "Letter B"
+    )
+  )
+)
 }
