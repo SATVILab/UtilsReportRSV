@@ -8,8 +8,9 @@
 #' of objects saved.
 #'
 #' @param dir_base character. Path to base directory where objects
-#' are to be saved.
-#' Default is \code{here::here("_book")}.
+#' are to be saved, relative to \code{here::here()},
+#' i.e. the base directory is effectively \code{here::here(dir_base)}.
+#' Default is \code{"_book"}.
 #' @param prefix character. Prefix for naming
 #' objects specifying paths to particular directories.
 #' Default is \code{.dir_bd}. This results in objects
@@ -29,7 +30,7 @@
 #' @export
 #'
 #' @aliases set_up_output_dir
-setup_output_dir <- function(dir_base = here::here("_book"),
+setup_output_dir <- function(dir_base = "_book",
                              prefix = ".dir_bd_") {
 
   # auto-install here package if require
@@ -41,14 +42,14 @@ setup_output_dir <- function(dir_base = here::here("_book"),
   # -------------
   for (x in c("manu", "manu_n")) {
     for (y in c("fig", "tbl")) {
-      dir_curr <- file.path(dir_base, x, y)
+      dir_curr <- file.path(here::here(dir_base), x, y)
       if (!dir.exists(dir_curr)) dir.create(dir_curr, recursive = TRUE)
       nm <- paste0(prefix, x, "_", y)
       assign(
         x =  nm, value = dir_curr, envir = parent.frame(2)
       )
 
-      dir_curr_rel <- gsub(here::here(), dir_base, x, y)
+      dir_curr_rel <- gsub(here::here(), "", dir_curr)
       nm <- paste0(prefix, x, "_", y, "_rel")
       assign(
         x = nm, value = dir_curr_rel, envir = parent.frame(2)

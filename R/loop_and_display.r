@@ -95,6 +95,10 @@ loop_and_display <- function(.tbl,
                              skip_if_nothing = TRUE,
                              orig_to_display = list(),
                              header_lvl_top = 2) {
+
+  if (!requireNamespace("pander")) {
+    install.packages("pander")
+  }
   vars_list <- lapply(.vars, function(x) {
     out <- unique(.tbl[[x]])
     if (sort) out <- sort(out)
