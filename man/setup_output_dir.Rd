@@ -5,14 +5,15 @@
 \alias{set_up_output_dir}
 \title{Set up output directories}
 \usage{
-setup_output_dir(dir_base = here::here("_book"), prefix = ".dir_bd_")
+setup_output_dir(dir_base = "_book", prefix = ".dir_bd_")
 
-set_up_output_dir(dir_base = here::here("_book"), prefix = ".dir_bd_")
+set_up_output_dir(dir_base = "_book", prefix = ".dir_bd_")
 }
 \arguments{
 \item{dir_base}{character. Path to base directory where objects
-are to be saved.
-Default is \code{here::here("_book")}.}
+are to be saved, relative to \code{here::here()},
+i.e. the base directory is effectively \code{here::here(dir_base)}.
+Default is \code{"_book"}.}
 
 \item{prefix}{character. Prefix for naming
 objects specifying paths to particular directories.
