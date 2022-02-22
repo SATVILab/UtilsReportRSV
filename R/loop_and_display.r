@@ -109,7 +109,7 @@ loop_and_display <- function(.tbl,
 
   # replace with tidyr::cross
   # function or whatever it is
-  vars_tbl <- datautils::cross_df_safe(vars_list) %>%
+  vars_tbl <- cross_df_safe(vars_list) %>%
     dplyr::arrange(dplyr::across(.vars)) %>%
     dplyr::mutate_if(is.factor, as.character)
 

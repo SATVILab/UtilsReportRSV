@@ -18,8 +18,5 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
-    dplyr,
-    datautils (>= 0.1.0)
-Remotes: 
-    MiguelRodo/datautils
+    dplyr
 RoxygenNote: 7.1.2
