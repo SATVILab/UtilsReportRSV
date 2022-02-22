@@ -43,13 +43,16 @@ setup_output_dir <- function(dir_base = "_book",
   for (x in c("manu", "manu_n")) {
     for (y in c("fig", "tbl")) {
       dir_curr <- file.path(here::here(dir_base), x, y)
+      dir_curr <- normalizePath(dir_curr, mustWork = FALSE, winslash = "/")
       if (!dir.exists(dir_curr)) dir.create(dir_curr, recursive = TRUE)
       nm <- paste0(prefix, x, "_", y)
       assign(
         x =  nm, value = dir_curr, envir = .GlobalEnv
       )
-
-      dir_curr_rel <- gsub(here::here(), "", dir_curr)
+      len_dir_root <- nchar(normalizePath(here::here(), winslash = "/"))
+      dir_curr_rel <- substr(
+        dir_curr, start = len_dir_root + 2, stop = nchar(dir_curr)
+        )
       nm <- paste0(prefix, x, "_", y, "_rel")
       assign(
         x = nm, value = dir_curr_rel, envir = .GlobalEnv
