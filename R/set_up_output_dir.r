@@ -46,13 +46,13 @@ setup_output_dir <- function(dir_base = "_book",
       if (!dir.exists(dir_curr)) dir.create(dir_curr, recursive = TRUE)
       nm <- paste0(prefix, x, "_", y)
       assign(
-        x =  nm, value = dir_curr, envir = parent.frame(2)
+        x =  nm, value = dir_curr, envir = .GlobalEnv
       )
 
       dir_curr_rel <- gsub(here::here(), "", dir_curr)
       nm <- paste0(prefix, x, "_", y, "_rel")
       assign(
-        x = nm, value = dir_curr_rel, envir = parent.frame(2)
+        x = nm, value = dir_curr_rel, envir = .GlobalEnv
       )
     }
   }
