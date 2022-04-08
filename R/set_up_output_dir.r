@@ -13,13 +13,13 @@
 #' Default is \code{"_book"}.
 #' @param prefix character. Prefix for naming
 #' objects specifying paths to particular directories.
-#' Default is \code{.dir_bd}. This results in objects
-#' \code{.dir_bd_manu}, \code{.dir_bd_manu_n},
-#' \code{.dir_bd_manu_fig}, \code{dir_bd_manu_tbl},
-#' \code{.dir_bd_manu_n_fig} and \code{dir_bd_manu_n_tbl},
+#' Default is \code{dir_}. This results in objects
+#' \code{dir_manu}, \code{dir_manu_n},
+#' \code{dir_manu_fig}, \code{dir_manu_tbl},
+#' \code{dir_manu_n_fig} and \code{dir_manu_n_tbl},
 #' which provide the absolute paths.
 #' Corresponding objects ending in "_rel" (e.g.
-#' \code{.dir_bd_manu_rel}) specify the
+#' \code{dir_manu_rel}) specify the
 #' relative paths (relative to \code{here::here()}).
 #'
 #' @return \code{invisible(TRUE)}. Side effects are
@@ -31,7 +31,7 @@
 #'
 #' @aliases set_up_output_dir
 setup_output_dir <- function(dir_base = "_book",
-                             prefix = ".dir_bd_") {
+                             prefix = "dir_") {
 
   # auto-install here package if require
   if (!requireNamespace("here", quietly = TRUE)) {

@@ -5,9 +5,9 @@
 \alias{set_up_output_dir}
 \title{Set up output directories}
 \usage{
-setup_output_dir(dir_base = "_book", prefix = ".dir_bd_")
+setup_output_dir(dir_base = "_book", prefix = "dir_")
 
-set_up_output_dir(dir_base = "_book", prefix = ".dir_bd_")
+set_up_output_dir(dir_base = "_book", prefix = "dir_")
 }
 \arguments{
 \item{dir_base}{character. Path to base directory where objects
@@ -17,13 +17,13 @@ Default is \code{"_book"}.}
 
 \item{prefix}{character. Prefix for naming
 objects specifying paths to particular directories.
-Default is \code{.dir_bd}. This results in objects
-\code{.dir_bd_manu}, \code{.dir_bd_manu_n},
-\code{.dir_bd_manu_fig}, \code{dir_bd_manu_tbl},
-\code{.dir_bd_manu_n_fig} and \code{dir_bd_manu_n_tbl},
+Default is \code{dir_}. This results in objects
+\code{dir_manu}, \code{dir_manu_n},
+\code{dir_manu_fig}, \code{dir_manu_tbl},
+\code{dir_manu_n_fig} and \code{dir_manu_n_tbl},
 which provide the absolute paths.
 Corresponding objects ending in "_rel" (e.g.
-\code{.dir_bd_manu_rel}) specify the
+\code{dir_manu_rel}) specify the
 relative paths (relative to \code{here::here()}).}
 }
 \value{
