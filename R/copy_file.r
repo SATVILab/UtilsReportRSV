@@ -35,6 +35,7 @@
 #' is \code{\home\usr\folder1},
 #' then the file will be copied to will be
 #' \code{\home\usr\newfolder1\folder2\folder3\plot.png}.
+#' A frequently-useful option is \code{here::here()} (or \code{getwd()}).
 #' Default is \code{NULL}.
 #' @param make_final_adjustment function.
 #' Function applied to path immediately before copying
@@ -46,6 +47,18 @@
 #' If \code{FALSE}, then any existing file at the final
 #' destination will be overwritten.
 #' Default is \code{FALSE}.
+#' @param return_relative_path_from character.
+#' Functions similarly to \code{keep_relative_path_from},
+#' except that it modifies the path returned by \code{copy_file}.
+#' By default \code{copy_file} returns the absolute path the
+#' object was copied to.
+#' By specifying \code{return_relative_path_from}, one
+#' may obtain a relative path instead.
+#' Again, frequently-useful option is
+#' \code{here::here()} (or \code{getwd()}) (especially for
+#' passing relative paths to \code{knitr::include_graphics}
+#' when using \code{bookdown}).
+#' Default is \code{NULL}.
 #' @param ... Passed to `file.copy`.
 #'
 #' @return Invisibly returns the final path copied to.
