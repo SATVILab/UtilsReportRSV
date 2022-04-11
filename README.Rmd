@@ -13,34 +13,35 @@ knitr::opts_chunk$set(
 )
 ```
 
-# reportutils
+# UtilsReportRMR
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of reportutils is to provide utility
+The goal of UtilsReportRMR is to provide utility
 functions that facilitate easier, faster and more
 reliable communication of data pre-processing and analysis.
 
 ## Installation
 
-You can install the development version of reportutils like so:
+You can install the development version of UtilsReportRMR like so:
 
 ``` r
-devtools::install_github("MiguelRodo/reportutils")
+if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
+remotes::install_github("MiguelRodo/UtilsReportRMR")
 ```
 
 ## Uses
 
 ```{r example}
-library(reportutils)
+library(UtilsReportRMR)
 ```
 
 ### Display outputs by section with headings
 
 ```{r , include = FALSE}
 set.seed(2106)
-if (!require("ggplot2")) install.packages("ggplot2")
+if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
 library(ggplot2)
 plot_list <- vapply(1:4, function(i) {
   p <- ggplot(
@@ -80,4 +81,24 @@ loop_and_display(
     #knitr::include_graphics(df$path_plot)
   }
 )
+```
+
+The function copy_file makes it easier to copy files by working out the final directory programmatically. Amongst other options,
+one can ensure that the relative path from a particular directory is kept in the
+final copied-to directory:
+```{r }
+dir_test <- file.path(tempdir(), "copy_file")
+from <- file.path(dir_test, "folder1", "folder2", "folder3", "silly.txt")
+if (!dir.exists(dirname(from))) dir.create(dirname(from), recursive = TRUE)
+file.create(from)
+
+copy_file(
+  from = from,
+  to_dir = file.path(dir_test, "testToDir"),
+  keep_relative_path_from = file.path(dir_test, "folder1")
+)
+file.exists(
+  file.path(dir_test, "testToDir", "folder2", "folder3", "silly.txt")
+)
+unlink(dir_test, recursive = TRUE)
 ```

@@ -1,27 +1,28 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# reportutils
+# UtilsReportRMR
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of reportutils is to provide utility functions that facilitate
-easier, faster and more reliable communication of data pre-processing
-and analysis.
+The goal of UtilsReportRMR is to provide utility functions that
+facilitate easier, faster and more reliable communication of data
+pre-processing and analysis.
 
 ## Installation
 
-You can install the development version of reportutils like so:
+You can install the development version of UtilsReportRMR like so:
 
 ``` r
-devtools::install_github("MiguelRodo/reportutils")
+if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
+remotes::install_github("MiguelRodo/UtilsReportRMR")
 ```
 
 ## Uses
 
 ``` r
-library(reportutils)
+library(UtilsReportRMR)
 ```
 
 ### Display outputs by section with headings
@@ -45,24 +46,47 @@ loop_and_display(
     #knitr::include_graphics(df$path_plot)
   }
 )
+#> Loading required namespace: pander
 ```
 
 ## Female
 
 ### Adult
 
-![](c:/Users/migue/Work/Packages/reportutils/man/fig/p_2.png)
+![](C:/Users/migue/Work/Packages/UtilsReportRMR/man/fig/p_2.png)
 
 ### Child
 
-![](c:/Users/migue/Work/Packages/reportutils/man/fig/p_1.png)
+![](C:/Users/migue/Work/Packages/UtilsReportRMR/man/fig/p_1.png)
 
 ## Male
 
-### Adult
-
-![](c:/Users/migue/Work/Packages/reportutils/man/fig/p_4.png)
+![](C:/Users/migue/Work/Packages/UtilsReportRMR/man/fig/p_4.png)
 
 ### Child
 
-![](c:/Users/migue/Work/Packages/reportutils/man/fig/p_3.png)
+![](C:/Users/migue/Work/Packages/UtilsReportRMR/man/fig/p_3.png)
+
+The function copy\_file makes it easier to copy files by working out the
+final directory programmatically. Amongst other options, one can ensure
+that the relative path from a particular directory is kept in the final
+copied-to directory:
+
+``` r
+dir_test <- file.path(tempdir(), "copy_file")
+from <- file.path(dir_test, "folder1", "folder2", "folder3", "silly.txt")
+if (!dir.exists(dirname(from))) dir.create(dirname(from), recursive = TRUE)
+file.create(from)
+#> [1] TRUE
+
+copy_file(
+  from = from,
+  to_dir = file.path(dir_test, "testToDir"),
+  keep_relative_path_from = file.path(dir_test, "folder1")
+)
+file.exists(
+  file.path(dir_test, "testToDir", "folder2", "folder3", "silly.txt")
+)
+#> [1] TRUE
+unlink(dir_test, recursive = TRUE)
+```
