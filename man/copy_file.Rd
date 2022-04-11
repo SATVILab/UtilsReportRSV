@@ -123,7 +123,7 @@ To copy directories, use \code{copy_dir}.
  file.exists(
    file.path(dir_test, "testToDir", "folder2", "YABADOO", "silly.txt")
  )
- 
+
  # show return_relative_path_from
  # --------------------
  path_abs <- copy_file(

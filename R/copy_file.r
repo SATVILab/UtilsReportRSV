@@ -100,7 +100,7 @@
 #'  file.exists(
 #'    file.path(dir_test, "testToDir", "folder2", "YABADOO", "silly.txt")
 #'  )
-#'  
+#'
 #'  # show return_relative_path_from
 #'  # --------------------
 #'  path_abs <- copy_file(
@@ -217,21 +217,69 @@ copy_file <- function(
   }
 
   # return path relative to some directory
-  if (!dir.exists(return_relative_path_from)) {
+
+  if (FALSE) {
+    if (!dir.exists(return_relative_path_from)) {
+      warning(
+        "return_relative_path_from does not exist, making it unlikely to work"
+      )
+    }
+    dir_rel_from <- normalizePath(
+      return_relative_path_from,
+      winslash = "/",
+      mustWork = FALSE
+    )
+    nchar_dir_rel_from <- nchar(dir_rel_from)
+    path_rel <- substr(
+      to_fn,
+      start = nchar_dir_rel_from + 2,
+      stop = nchar(to_fn)
+    )
+  }
+
+  path_rel <- get_relative_path(
+    path = to_fn,
+    path_base = return_relative_path_from
+  )
+
+  invisible(path_rel)
+}
+
+#' @title Get relative path
+#'
+#' @description Get the path to a file/directory
+#' relative to some sub-path.
+#'
+#' @param path character.
+#' Path to object for which we require a relative path.
+#' @param path_base character.
+#' Path against which the relative path should be calculated.
+#'
+#' @export
+get_relative_path <- function(
+  path,
+  path_base
+) {
+  path <- normalizePath(path, winslash = "/", mustWork = FALSE)
+  path_base <- normalizePath(path_base, winslash = "/", mustWork = FALSE)
+
+    # return path relative to some directory
+  if (!dir.exists(path_base)) {
     warning(
-      "return_relative_path_from does not exist, making it unlikely to work"
+      "path_base does not exist, making it unlikely to work"
     )
   }
   dir_rel_from <- normalizePath(
-    return_relative_path_from,
+    path_base,
     winslash = "/",
     mustWork = FALSE
   )
+
   nchar_dir_rel_from <- nchar(dir_rel_from)
-  path_rel <- substr(
-    to_fn,
+
+  substr(
+    path,
     start = nchar_dir_rel_from + 2,
-    stop = nchar(to_fn)
+    stop = nchar(path)
   )
-  invisible(path_rel)
 }
