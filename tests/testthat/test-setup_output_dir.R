@@ -2,7 +2,9 @@ test_that("setup_output_dir works", {
   wd <- getwd()
   on.exit(setwd(wd))
   wd_temp <- file.path(tempdir(), "test_setup_output_dir")
-  try(dir.create(wd_temp, recursive = TRUE), silent = TRUE)
+  if (!dir.exists(wd_temp)) {
+    dir.create(wd_temp, recursive = TRUE)
+  }
   on.exit(try(unlink(wd_temp, recursive = TRUE)))
   setwd(wd_temp)
   file.create(".here")
@@ -25,7 +27,7 @@ test_that("setup_output_dir works", {
   )
   # check that objects were saved to global environment
   obj_vec <- paste0(
-    ".dir_bd_",
+    "dir_",
     c("manu_fig", "manu_tbl", "manu_n_tbl", "manu_n_fig")
   )
   expect_true(
