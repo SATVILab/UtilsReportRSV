@@ -176,9 +176,15 @@ copy_file <- function(
   } else {
     # if to path is just to a directory
     to_dir <- normalizePath(
-      to_dir, winslash = "/", mustWork = FALSE
+      to_dir,
+      winslash = "/", mustWork = FALSE
     )
-
+    if (file.exists(to_dir)) {
+      if (!file.info(to_dir)$isdir) stop(paste0(
+        "save directory,", to_dir,
+        " exists already and is not a directory."
+      ))
+    }
     # if relative structure to be kept
     if (!is.null(keep_relative_path_from)) {
       if (!dir.exists(keep_relative_path_from)) {
@@ -191,7 +197,6 @@ copy_file <- function(
         winslash = "/",
         mustWork = FALSE
       )
-      nchar_dir_rel_from <- nchar(dir_rel_from)
       dir_append <- substr(
         from,
         start = nchar(dir_rel_from) + 2,
@@ -206,6 +211,20 @@ copy_file <- function(
     # make any final adjustments
     if (!is.null(make_final_adjustment)) {
       to_fn <- make_final_adjustment(to_fn)
+    }
+
+    if (file.exists(dirname(to_fn)) && !file.info(dirname(to_dir))) {
+      stop(paste0(
+        "save directory,", to_dir,
+        " exists already and is not a directory."
+      ))
+    }
+
+    if (file.exists(dirname(to_fn))) {
+      if (!file.info(dirname(to_fn))$isdir) stop(paste0(
+        "save directory,", dirname(to_fn),
+        " exists already and is not a directory."
+      ))
     }
 
     # create directory to copy to
