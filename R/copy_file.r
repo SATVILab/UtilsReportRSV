@@ -213,15 +213,8 @@ copy_file <- function(
       to_fn <- make_final_adjustment(to_fn)
     }
 
-    if (file.exists(dirname(to_fn)) && !file.info(dirname(to_dir))) {
-      stop(paste0(
-        "save directory,", to_dir,
-        " exists already and is not a directory."
-      ))
-    }
-
     if (file.exists(dirname(to_fn))) {
-      if (!file.info(dirname(to_fn))$isdir) stop(paste0(
+      if (!file.info(dirname(to_fn))[["isdir"]]) stop(paste0(
         "save directory,", dirname(to_fn),
         " exists already and is not a directory."
       ))
@@ -249,25 +242,22 @@ copy_file <- function(
   }
 
   # return path relative to some directory
-
-  if (FALSE) {
-    if (!dir.exists(return_relative_path_from)) {
-      warning(
-        "return_relative_path_from does not exist, making it unlikely to work"
-      )
-    }
-    dir_rel_from <- normalizePath(
-      return_relative_path_from,
-      winslash = "/",
-      mustWork = FALSE
-    )
-    nchar_dir_rel_from <- nchar(dir_rel_from)
-    path_rel <- substr(
-      to_fn,
-      start = nchar_dir_rel_from + 2,
-      stop = nchar(to_fn)
+  if (!dir.exists(return_relative_path_from)) {
+    warning(
+      "return_relative_path_from does not exist, making it unlikely to work"
     )
   }
+  dir_rel_from <- normalizePath(
+    return_relative_path_from,
+    winslash = "/",
+    mustWork = FALSE
+  )
+  nchar_dir_rel_from <- nchar(dir_rel_from)
+  path_rel <- substr(
+    to_fn,
+    start = nchar_dir_rel_from + 2,
+    stop = nchar(to_fn)
+  )
 
   path_rel <- get_relative_path(
     path = to_fn,
