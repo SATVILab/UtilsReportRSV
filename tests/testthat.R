@@ -1,4 +1,4 @@
 library(testthat)
-library(reportutils)
+library(UtilsReportRSV)
 
-test_check("reportutils")
+test_check("UtilsReportRSV")

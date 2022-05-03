@@ -1,4 +1,6 @@
 test_that("loop_and_display works", {
+
+  library(UtilsReportRSV)
   test_tbl <- tibble::tibble(
     x = rep(letters[1:2], each = 2),
     y = purrr::map(1:2, function(i) {

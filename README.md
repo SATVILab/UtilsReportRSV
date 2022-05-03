@@ -1,28 +1,28 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# UtilsReportRMR
+# UtilsReportRSV
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of UtilsReportRMR is to provide utility functions that
+The goal of UtilsReportRSV is to provide utility functions that
 facilitate easier, faster and more reliable communication of data
 pre-processing and analysis.
 
 ## Installation
 
-You can install the development version of UtilsReportRMR like so:
+You can install the development version of UtilsReportRSV like so:
 
 ``` r
 if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
-remotes::install_github("MiguelRodo/UtilsReportRMR")
+remotes::install_github("SATVILab/UtilsReportRSV")
 ```
 
 ## Uses
 
 ``` r
-library(UtilsReportRMR)
+library(UtilsReportRSV)
 ```
 
 ### Display outputs by section with headings
@@ -53,19 +53,19 @@ loop_and_display(
 
 ### Adult
 
-![](C:/Users/migue/Work/Packages/UtilsReportRMR/man/fig/p_2.png)
+![](C:/Users/migue/Work/Packages/UtilsReportRSV/man/fig/p_2.png)
 
 ### Child
 
-![](C:/Users/migue/Work/Packages/UtilsReportRMR/man/fig/p_1.png)
+![](C:/Users/migue/Work/Packages/UtilsReportRSV/man/fig/p_1.png)
 
 ## Male
 
-![](C:/Users/migue/Work/Packages/UtilsReportRMR/man/fig/p_4.png)
+![](C:/Users/migue/Work/Packages/UtilsReportRSV/man/fig/p_4.png)
 
 ### Child
 
-![](C:/Users/migue/Work/Packages/UtilsReportRMR/man/fig/p_3.png)
+![](C:/Users/migue/Work/Packages/UtilsReportRSV/man/fig/p_3.png)
 
 The function copy\_file makes it easier to copy files by working out the
 final directory programmatically. Amongst other options, one can ensure

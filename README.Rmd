@@ -13,28 +13,28 @@ knitr::opts_chunk$set(
 )
 ```
 
-# UtilsReportRMR
+# UtilsReportRSV
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of UtilsReportRMR is to provide utility
+The goal of UtilsReportRSV is to provide utility
 functions that facilitate easier, faster and more
 reliable communication of data pre-processing and analysis.
 
 ## Installation
 
-You can install the development version of UtilsReportRMR like so:
+You can install the development version of UtilsReportRSV like so:
 
 ``` r
 if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")
-remotes::install_github("MiguelRodo/UtilsReportRMR")
+remotes::install_github("SATVILab/UtilsReportRSV")
 ```
 
 ## Uses
 
 ```{r example}
-library(UtilsReportRMR)
+library(UtilsReportRSV)
 ```
 
 ### Display outputs by section with headings

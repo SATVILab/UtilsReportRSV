@@ -1,4 +1,5 @@
 test_that("copy_file works", {
+  library(UtilsReportRSV)
 
   dir_test <- file.path(tempdir(), "copy_file")
   from <- file.path(dir_test, "folder1", "folder2", "folder3", "silly.txt")
