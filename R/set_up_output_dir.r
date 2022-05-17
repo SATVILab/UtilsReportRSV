@@ -1,26 +1,24 @@
 
-#' @title Set up output directories
+#' @title Set up bookdown output directories
 #'
-#' @description Set up \code{bookdown} manuscript
-#' and non-manuscript figure and table output directories.
-#' Creates directories, and saves objects specifying these directories
-#' into global environment. See \code{prefix} for details
-#' of objects saved.
+#' @description Create objects that
+#' give paths relative to the bookdown output directory.
+#' In addition, it creates those directories if they
+#' do not already exist.
+#' 
+#' Useful to save results to such folders
+#' so that the resultant bookdown output directory
+#' is portable, i.e. can be moved around and the
+#' path references to the figures and tables
+#' still work.
 #'
-#' @param dir_base character. Path to base directory where objects
-#' are to be saved, relative to \code{here::here()},
-#' i.e. the base directory is effectively \code{here::here(dir_base)}.
-#' Default is \code{"_book"}.
-#' @param prefix character. Prefix for naming
-#' objects specifying paths to particular directories.
-#' Default is \code{dir_}. This results in objects
-#' \code{dir_manu}, \code{dir_manu_n},
-#' \code{dir_manu_fig}, \code{dir_manu_tbl},
-#' \code{dir_manu_n_fig} and \code{dir_manu_n_tbl},
-#' which provide the absolute paths.
-#' Corresponding objects ending in "_rel" (e.g.
-#' \code{dir_manu_rel}) specify the
-#' relative paths (relative to \code{here::here()}).
+#' If the output directory is unspecified (i.e. there is
+#' no entry \code{output_dir} in \code{_bookdown.yml}),
+#' then the output directory is taken to be the default \code{_book}.
+#'
+#' @param sub named character vector.
+#' The names are the names of the objects to be created, and
+#' the values are paths relative to the report output directory.
 #'
 #' @return \code{invisible(TRUE)}. Side effects are
 #' the creation of directories and saving
@@ -28,36 +26,51 @@
 #' to global environment.
 #'
 #' @export
+#' 
+#' @examples
+#' wd_temp <- file.path(tempdir(), "test_setup_output_dir")
+#'  if (!dir.exists(wd_temp)) {
+#'    dir.create(wd_temp, recursive = TRUE)
+#'  }
+#' file.create("_bookdown.yml")
+#' setup_bookdown_output_dir()
+#' dir_m_fig
 #'
 #' @aliases set_up_output_dir
-setup_output_dir <- function(dir_base = "_book",
-                             prefix = "dir_") {
+setup_bookdown_output_dir <- function(sub = c(
+                                        dir_m_fig = "manu/fig",
+                                        dir_m_tbl = "manu/tbl",
+                                        dir_mn_fig = "manu_n/fig",
+                                        dir_mn_tbl = "manu_n/tbl"
+                                      )) {
 
-  # auto-install here package if require
-  if (!requireNamespace("here", quietly = TRUE)) {
-    install.packages("here", quiet = TRUE)
+  if (!file.exists("_bookdown.yml")) {
+    stop("_bookdown.yml does not exist, so this seems not to be a bookdown directory.") # nolint
   }
 
-  # directories
-  # -------------
-  for (x in c("manu", "manu_n")) {
-    for (y in c("fig", "tbl")) {
-      dir_curr <- file.path(here::here(dir_base), x, y)
-      dir_curr <- normalizePath(dir_curr, mustWork = FALSE, winslash = "/")
-      if (!dir.exists(dir_curr)) dir.create(dir_curr, recursive = TRUE)
-      nm <- paste0(prefix, x, "_", y)
-      assign(
-        x =  nm, value = dir_curr, envir = .GlobalEnv
-      )
-      len_dir_root <- nchar(normalizePath(here::here(), winslash = "/"))
-      dir_curr_rel <- substr(
-        dir_curr, start = len_dir_root + 2, stop = nchar(dir_curr)
-        )
-      nm <- paste0(prefix, x, "_", y, "_rel")
-      assign(
-        x = nm, value = dir_curr_rel, envir = .GlobalEnv
-      )
+  if (!requireNamespace("yaml", quietly = TRUE)) {
+    utils::install.pakckages("yaml", quiet = TRUE)
+  }
+  bd_settings <- yaml::read_yaml("_bookdown.yml")
+  dir_bd <- ifelse(
+    !is.null(bd_settings$output_dir),
+    bd_settings$output_dir,
+    "_book"
+  )
+
+  if (is.null(names(sub)) && length(sub) > 0) stop("sub must be named")
+  if (!is.character(sub) && !is.null(sub)) {
+    stop("sub must be a character vector")
+  }
+
+  for (i in seq_along(sub)) {
+    dir_bd_sub <- file.path(dir_bd, sub[[i]])
+    if (!dir.exists(dir_bd_sub)) {
+      dir.create(dir_bd_sub, recursive = TRUE)
     }
+    assign(
+      x = names(sub)[i], value = file.path(dir_bd, sub[[i]]), envir = .GlobalEnv
+    )
   }
 
   invisible(TRUE)
@@ -65,4 +78,4 @@ setup_output_dir <- function(dir_base = "_book",
 
 #' @rdname setup_output_dir
 #' @export
-set_up_output_dir <- setup_output_dir
+set_up_bookdown_output_dir <- setup_bookdown_output_dir

@@ -3,6 +3,6 @@
 export(copy_file)
 export(get_relative_path)
 export(loop_and_display)
-export(set_up_output_dir)
-export(setup_output_dir)
+export(set_up_bookdown_output_dir)
+export(setup_bookdown_output_dir)
 importFrom(magrittr,"%>%")
