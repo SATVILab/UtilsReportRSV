@@ -11,7 +11,9 @@ loop_and_display(
   sort = FALSE,
   skip_if_nothing = TRUE,
   orig_to_display = list(),
-  header_lvl_top = 2
+  header_lvl_top = 2,
+  header_lvl_max = 6,
+  header_lvl_max_repeat = FALSE
 )
 }
 \arguments{
@@ -66,6 +68,20 @@ highest level looping variable.
 Corresponds to the number of
 hashes before a Markdown heading.
 Default is \code{2}.}
+
+\item{header_lvl_max}{integer.
+Maximum header level to print.
+Default is \code{6}.}
+
+\item{header_lvl_max_repeat}{logical.
+If \code{TRUE}, then the smallest
+header level is used for all looping variables
+corresponding to header level six or higher.
+if \code{FALSE}, then the variables corresponding
+to (what would be) header level seven or higher
+are plotted in bold with their level number in
+brackets next to them.
+Default is \code{FALSE}.}
 }
 \value{
 \code{invisible(TRUE)}, if successful.

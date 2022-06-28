@@ -59,6 +59,18 @@
 #' Corresponds to the number of
 #' hashes before a Markdown heading.
 #' Default is \code{2}.
+#' @param header_lvl_max integer.
+#' Maximum header level to print.
+#' Default is \code{6}.
+#' @param header_lvl_max_repeat logical.
+#' If \code{TRUE}, then the smallest
+#' header level is used for all looping variables
+#' corresponding to header level six or higher.
+#' if \code{FALSE}, then the variables corresponding
+#' to (what would be) header level seven or higher
+#' are plotted in bold with their level number in
+#' brackets next to them.
+#' Default is \code{FALSE}.
 #'
 #' @examples
 #'
@@ -94,8 +106,9 @@ loop_and_display <- function(.tbl,
                              sort = FALSE,
                              skip_if_nothing = TRUE,
                              orig_to_display = list(),
-                             header_lvl_top = 2) {
-
+                             header_lvl_top = 2,
+                             header_lvl_max = 6,
+                             header_lvl_max_repeat = FALSE) {
   if (!requireNamespace("pander")) {
     install.packages("pander")
   }
@@ -130,14 +143,15 @@ loop_and_display <- function(.tbl,
       mismatch_vec_ind <- purrr::map_lgl(seq_along(vars_row), function(j) {
         vars_row[[j]] != vars_tbl[i - 1, ][[j]]
       }) %>%
-      which()
-      mismatch_vec_ind <- switch(
-        as.character(length(mismatch_vec_ind)),
+        which()
+      mismatch_vec_ind <- switch(as.character(length(mismatch_vec_ind)),
         "0" = , # nolint
         "1" = integer(0),
         mismatch_vec_ind[-1]
       )
-    } else mismatch_vec_ind <- integer(0)
+    } else {
+      mismatch_vec_ind <- integer(0)
+    }
 
     ind_vec <- rep(TRUE, nrow(.tbl))
     for (j in seq_len(ncol(vars_row))) {
@@ -166,10 +180,18 @@ loop_and_display <- function(.tbl,
             stop("orig_to_display elements must be character vectors or functions") # nolint
           )
         }
-        pander::pandoc.header(
-          hd,
-          level = min(header_lvl_top - 1 + j, 6)
-        )
+        header_lvl_unrestricted <- header_lvl_top - 1 + j
+        if (header_lvl_max_repeat || header_lvl_unrestricted <= header_lvl_max) {
+          header_lvl <- min(header_lvl_unrestricted, header_lvl_max)
+          pander::pandoc.header(
+            hd,
+            level = header_lvl
+          )
+        } else {
+          lvl_past <- header_lvl_unrestricted - header_lvl_max
+          hd <- paste0(hd, " (l", lvl_past, ")")
+          cat(paste0(hd, "\n"))
+        }
       }
       vars_list_hd[[cn]] <- setdiff(vars_list_hd[[cn]], vars_row[[cn]])
     }

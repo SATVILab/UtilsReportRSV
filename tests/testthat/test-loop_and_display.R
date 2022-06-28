@@ -1,5 +1,4 @@
 test_that("loop_and_display works", {
-
   library(UtilsReportRSV)
   test_tbl <- tibble::tibble(
     x = rep(letters[1:2], each = 2),
@@ -29,6 +28,13 @@ test_that("loop_and_display works", {
   expect_true(loop_and_display(
     test_tbl,
     .vars = c("x", "y"),
+    .f = function(x) cat("\n", "abc", "\n"),
+    skip_if_nothing = FALSE
+  ))
+  expect_true(loop_and_display(
+    test_tbl,
+    .vars = c("x", "y"),
+    header_lvl_max_repeat = TRUE,
     .f = function(x) cat("\n", "abc", "\n"),
     skip_if_nothing = FALSE
   ))
