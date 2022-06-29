@@ -2,7 +2,7 @@
 % Please edit documentation in R/set_up_output_dir.r
 \name{setup_bookdown_output_dir}
 \alias{setup_bookdown_output_dir}
-\alias{set_up_output_dir}
+\alias{set_up_bookdown_output_dir}
 \title{Set up bookdown output directories}
 \usage{
 setup_bookdown_output_dir(
@@ -39,9 +39,9 @@ then the output directory is taken to be the default \code{_book}.
 }
 \examples{
 wd_temp <- file.path(tempdir(), "test_setup_output_dir")
- if (!dir.exists(wd_temp)) {
-   dir.create(wd_temp, recursive = TRUE)
- }
+if (!dir.exists(wd_temp)) {
+  dir.create(wd_temp, recursive = TRUE)
+}
 file.create("_bookdown.yml")
 setup_bookdown_output_dir()
 dir_m_fig

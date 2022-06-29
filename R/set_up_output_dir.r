@@ -5,7 +5,7 @@
 #' give paths relative to the bookdown output directory.
 #' In addition, it creates those directories if they
 #' do not already exist.
-#' 
+#'
 #' Useful to save results to such folders
 #' so that the resultant bookdown output directory
 #' is portable, i.e. can be moved around and the
@@ -26,24 +26,23 @@
 #' to global environment.
 #'
 #' @export
-#' 
+#'
 #' @examples
 #' wd_temp <- file.path(tempdir(), "test_setup_output_dir")
-#'  if (!dir.exists(wd_temp)) {
-#'    dir.create(wd_temp, recursive = TRUE)
-#'  }
+#' if (!dir.exists(wd_temp)) {
+#'   dir.create(wd_temp, recursive = TRUE)
+#' }
 #' file.create("_bookdown.yml")
 #' setup_bookdown_output_dir()
 #' dir_m_fig
 #'
-#' @aliases set_up_output_dir
+#' @aliases set_up_bookdown_output_dir
 setup_bookdown_output_dir <- function(sub = c(
                                         dir_m_fig = "manu/fig",
                                         dir_m_tbl = "manu/tbl",
                                         dir_mn_fig = "manu_n/fig",
                                         dir_mn_tbl = "manu_n/tbl"
                                       )) {
-
   if (!file.exists("_bookdown.yml")) {
     stop("_bookdown.yml does not exist, so this seems not to be a bookdown directory.") # nolint
   }
@@ -71,9 +70,10 @@ setup_bookdown_output_dir <- function(sub = c(
     assign(
       x = names(sub)[i], value = file.path(dir_bd, sub[[i]]), envir = .GlobalEnv
     )
+    sub[i] <- dir_bd_sub
   }
 
-  invisible(TRUE)
+  invisible(sub)
 }
 
 #' @rdname setup_output_dir
