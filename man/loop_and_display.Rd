@@ -31,7 +31,7 @@ Takes a dataframe as input, and prints or cat's output.
 Default is \code{pander::pandoc.table}.}
 
 \item{sort}{logical.
-Whether to sort the unique elements with each looping
+Whether to sort the unique elements with the last (inner-most) looping
 variable. For example, if we loop on the column \code{"V1"}
 in the dataframe \code{data.frame(V1 = c(x2, x1, x2, x1), V2 = ...)},
 if we do not sort the first header related to V1 will be
