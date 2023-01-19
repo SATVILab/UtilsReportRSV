@@ -112,6 +112,13 @@ loop_and_display <- function(.tbl,
   if (!requireNamespace("pander")) {
     install.packages("pander")
   }
+  if (!missing(.vars)) {
+    if (!is.null(.vars)) {
+      if (length(setdiff(.vars, colnames(.tbl))) > 0) {
+        stop("Variables to loop over not in table")
+      }
+    }
+  }
   vars_list <- lapply(.vars, function(x) {
     out <- unique(.tbl[[x]])
     if (sort) out <- sort(out)
