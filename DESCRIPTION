@@ -1,7 +1,7 @@
 Package: UtilsReportRSV
 Type: Package
 Title: Utility functions for writing reports
-Version: 0.1.0.9001
+Version: 0.1.0.9002g
 Author: Miguel Julio Rodo
 Maintainer: Miguel Julio Rodo <rdxmig002@myuct.ac.za>
 Description: Provides utility functions for

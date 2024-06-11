@@ -48,7 +48,7 @@ setup_bookdown_output_dir <- function(sub = c(
   }
 
   if (!requireNamespace("yaml", quietly = TRUE)) {
-    utils::install.pakckages("yaml", quiet = TRUE)
+    utils::install.packages("yaml", quiet = TRUE)
   }
   bd_settings <- yaml::read_yaml("_bookdown.yml")
   dir_bd <- ifelse(
